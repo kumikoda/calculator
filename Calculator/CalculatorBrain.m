@@ -50,6 +50,11 @@
     self.programStack = nil;
 }
 
+- (void) removeTopItemFromStack
+{
+    [self.programStack removeLastObject];
+}
+
 + (double) runProgram: (id) program
 {
     NSMutableArray *stack;
@@ -134,6 +139,8 @@
         } else if ([self isVariable:topOfStack]){
             description = topOfStack;
         }
+    } else if (topOfStack == nil){
+        description = @"0";
     }
     
     return description;
@@ -142,10 +149,15 @@
     
 + (NSString *) descriptionOfProgram:(id)program {
     NSMutableArray *stack;
+    NSMutableArray *descriptions = [[NSMutableArray alloc] init];
+    
     if ([program isKindOfClass:[NSArray class]]) {
         stack = [program mutableCopy];
     }
-    return [self describe:stack];
+    while ([stack count]>0){
+        [descriptions addObject:[self describe:stack]];
+    }
+    return [[descriptions valueForKey:@"description"] componentsJoinedByString:@", "];
 }
 
 + (double) runProgram: (id)program usingVariableValues: (NSDictionary *) variableValues{

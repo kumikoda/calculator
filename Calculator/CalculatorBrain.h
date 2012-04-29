@@ -12,6 +12,7 @@
 - (void) pushOperand:(id)operand;
 - (double) performOperation:(NSString *)operation;
 - (double) performOperation:(NSString *)operation usingVariableValues: (NSDictionary *) variableValues;
+- (void) removeTopItemFromStack;
 - (void) clear;
 
 @property (readonly) id program;
